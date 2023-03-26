@@ -1,8 +1,12 @@
+import classes.GerenciarRegistro;
 import classes.animais.*;
+
 
 public class App {
     public static void main(String[] args) throws Exception 
     {
-        System.out.println("Em construcao");
+        GerenciarRegistro Gerenciador = new GerenciarRegistro();
+        Gerenciador.CriarRegistro();
+        Gerenciador.LerRegistro();
     }
 }
