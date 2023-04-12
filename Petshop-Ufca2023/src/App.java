@@ -8,6 +8,7 @@ public class App {
         Gerenciador.CriarRegistro();
         Registrar registro = new Registrar(); 
         registro.Registro(); 
-        Gerenciador.LerRegistroPets();
+
+
     }
 }

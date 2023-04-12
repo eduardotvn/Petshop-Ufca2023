@@ -12,8 +12,11 @@ public class Registrar {
             System.out.println("Escolha uma opcao:");
             Scanner scan = new Scanner(System.in);
             int opcao = scan.nextInt();
+            scan.nextLine();
             switch(opcao)
             {
+            	case 0:
+            		break; 
                 case 1: 
                     System.out.println("Nome do Tutor: ");
                     String nomeTutor = scan.nextLine(); 
@@ -29,6 +32,7 @@ public class Registrar {
                     String nome = scan.nextLine();
                     System.out.println("Idade do animal: "); 
                     int idade = scan.nextInt();
+                    scan.nextLine();
                     System.out.println("Raca do animal: ");
                     String raca = scan.nextLine();
                     System.out.println("Peso do animal: ");
