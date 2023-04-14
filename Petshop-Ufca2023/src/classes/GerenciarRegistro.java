@@ -118,7 +118,6 @@ public class GerenciarRegistro
 
     public void RegistrarPet(String nome, int idade, String raca, double peso)
     {
-    	System.out.println("Cheguei aqui");
         try{
         	JSONArray jsonArray; 
         	String petsData = new String(Files.readAllBytes(Paths.get("./src/registro/Pets.json")));
@@ -127,14 +126,12 @@ public class GerenciarRegistro
             } else {
                 jsonArray = new JSONArray(petsData);
             }
-        	System.out.println("Cheguei aqui 2");
             JSONObject json = new JSONObject();
             json.put("nome", nome);
             json.put("idade", idade);
             json.put("raca", raca);
             json.put("peso", peso);
             jsonArray.put(json);
-        	System.out.println("Cheguei aqui 3");
             String dadosPets = jsonArray.toString();
             
             registrador = new FileWriter("./src/registro/Pets.json");
@@ -233,7 +230,62 @@ public class GerenciarRegistro
         Scanner scan = new Scanner(System.in);
         int opcao = scan.nextInt();
         JSONArray json = getRegistro(opcao); 
-        
+        System.out.println(json);
+        switch(opcao)
+        {
+        case 1:
+            System.out.println("Procurar por chave? \r\n1 - Nome \r\n2 - Telefone \r\n3 - Email");
+            int numChave = scan.nextInt(); 
+            scan.nextLine();
+            System.out.println("Digite o valor da chave: ");
+            String valorChave = scan.nextLine(); 
+            for(int i = 0; i < json.length(); i++)
+            {            	
+            	if(numChave == 1 && json.getJSONObject(i).getString("nome").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} else if (numChave == 2 && json.getJSONObject(i).getString("telefone").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} else if (numChave == 3 && json.getJSONObject(i).getString("email").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	}
+            }
+            break; 
+        case 2: 
+        	System.out.println("Procurar por chave? \r\n1 - Nome \r\n2 - Raça");
+            numChave = scan.nextInt(); 
+            scan.nextLine(); 
+            valorChave = scan.nextLine(); 
+            for(int i = 0; i < json.length(); i++)
+            {
+            	if(numChave == 1 && json.getJSONObject(i).getString("nome").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} else if (numChave == 2 && json.getJSONObject(i).getString("raca").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} 
+            }
+            break; 
+        case 3: 
+        	System.out.println("Procurar por chave? \r\n1 - Nome \r\n2 - Raça");
+            numChave = scan.nextInt(); 
+            scan.nextLine();
+            valorChave = scan.nextLine(); 
+            for(int i = 0; i < json.length(); i++)
+            {
+            	if(numChave == 1 && json.getJSONObject(i).getString("nome").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} else if (numChave == 2 && json.getJSONObject(i).getString("raca").contains(valorChave))
+            	{
+            		System.out.println(json.getJSONObject(i));
+            	} 
+            }
+            break; 
+        }
     }
 }
 
