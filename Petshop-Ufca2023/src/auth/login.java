@@ -44,10 +44,9 @@ public class login {
             	{
             		placeholderSenha[j] = (byte) jsonArray.getJSONObject(i).getJSONArray("senha").getInt(j);
             	}
-            	if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.authenticatePassword(senha, placeholderSenha))
+            	if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha))
             	{
             		auth.appState.Logar(2);
-            		scan.close(); 
             		return true; 
             	}
             }
@@ -58,7 +57,7 @@ public class login {
 			System.out.println("Login falhou");
 			return false; 
 		}
-		
+
 		return false; 
 	}
 }

@@ -18,7 +18,6 @@ public class RegistrarAdministrador {
 	public void Registrar(String login, String senha, String chaveGerente)
 	{
 		this.chaveGerente = auth.Authentication.getChaveGerente(); 
-		File administrador = new File("./src/registro/Administradores.json");
 		try {
 			JSONArray jsonArray; 
 			String admData = new String(Files.readAllBytes(Paths.get("./src/registro/Administradores.json")));
@@ -29,7 +28,7 @@ public class RegistrarAdministrador {
             }
             JSONObject json = new JSONObject();
             
-            if(auth.Authentication.authenticatePassword(chaveGerente, this.chaveGerente))
+            if(auth.Authentication.autenticarSenha(chaveGerente, this.chaveGerente))
             {
             	json.put("login", login);
             	json.put("senha", auth.Encryption.encryptPassword(senha));

@@ -5,15 +5,12 @@ import java.util.Scanner;
 
 public class Registrar {
     
-    public void Registro()
+    public void Registro(int num)
     {
         try{
             GerenciarRegistro Registrar = new GerenciarRegistro(); 
-            System.out.println("Escolha uma opcao:");
             Scanner scan = new Scanner(System.in);
-            int opcao = scan.nextInt();
-            scan.nextLine();
-            switch(opcao)
+            switch(num)
             {
             	case 0:
             		break; 
@@ -24,12 +21,13 @@ public class Registrar {
                     String email = scan.nextLine(); 
                     System.out.println("Telefone: ");
                     String telefone = scan.nextLine(); 
-                    scan.close();
                     Registrar.RegistrarTutor(nomeTutor, email, telefone);
                     break; 
                 case 2: 
                     System.out.println("Nome do animal: ");
                     String nome = scan.nextLine();
+                    System.out.println("Email do tutor: ");
+                    email = scan.nextLine();
                     System.out.println("Idade do animal: "); 
                     int idade = scan.nextInt();
                     scan.nextLine();
@@ -42,21 +40,21 @@ public class Registrar {
                     switch(especie)
                     {
                         case 1: 
-                            Registrar.RegistrarPet(nome, idade, raca, peso);
+                            Registrar.RegistrarPet(nome, idade, raca, peso, email);
                             break; 
                         case 2: 
-                            Registrar.RegistrarPet(nome, idade, raca, peso);
+                            Registrar.RegistrarPet(nome, idade, raca, peso, email);
                             break; 
                         case 3: 
-                            Registrar.RegistrarPet(nome, idade, raca, peso);
+                            Registrar.RegistrarPet(nome, idade, raca, peso, email);
                             break; 
                         case 4: 
+                        	scan.nextLine(); 
                             System.out.println("Descreva o animal e a situacao: ");
                             String descricao = scan.nextLine(); 
-                            Registrar.RegistrarPetExotico(nome, idade, raca, peso, descricao);
+                            Registrar.RegistrarPetExotico(nome, idade, raca, peso, descricao, email);
                             break;
                     }
-                    scan.close();
                     break; 
             }
 

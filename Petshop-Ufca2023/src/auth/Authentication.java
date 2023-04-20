@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 public class Authentication {
-	public static boolean authenticatesenha(String senha, byte[] senhaSalva) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+	public static boolean autenticarSenha(String senha, byte[] senhaSalva) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 	    byte[] salt = Arrays.copyOfRange(senhaSalva, 0, 16);
 	    byte[] iv = Arrays.copyOfRange(senhaSalva, 16, 32);
 	    byte[] senhaCodificada = Arrays.copyOfRange(senhaSalva, 32, senhaSalva.length);

@@ -1,13 +1,17 @@
 package classes;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.util.Random;
 import java.util.Scanner;
 import org.json.JSONObject;
 import org.json.JSONArray;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class GerenciarRegistro 
 {
@@ -88,8 +92,12 @@ public class GerenciarRegistro
 
     public void RegistrarTutor(String nome, String email, String telefone)
     {
-    	System.out.println("Teste");
         try{
+        	byte[] randomByteArray = new byte[7];
+        	new Random().nextBytes(randomByteArray);
+        	String senhaRandom = new String(randomByteArray, Charset.forName("UTF-8"));
+        	byte[] senhaCodificada = auth.Encryption.encryptPassword(senhaRandom);
+        	
         	JSONArray jsonArray; 
         	String tutoresData = new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json")));
             if (tutoresData.trim().isEmpty()) {
@@ -99,9 +107,13 @@ public class GerenciarRegistro
             }
 
             JSONObject json = new JSONObject(); 
-            json.put("nome", nome);
+            json.put("login", nome);
+            json.put("senha", senhaCodificada);
             json.put("email", email);
             json.put("telefone", telefone);
+            json.put("id", jsonArray.length());
+            json.put("pets", "");
+            
             jsonArray.put(json); 
             
             String dadosTutor = jsonArray.toString(); 
@@ -116,7 +128,7 @@ public class GerenciarRegistro
         }
     }
 
-    public void RegistrarPet(String nome, int idade, String raca, double peso)
+    public void RegistrarPet(String nome, int idade, String raca, double peso, String email)
     {
         try{
         	JSONArray jsonArray; 
@@ -131,9 +143,33 @@ public class GerenciarRegistro
             json.put("idade", idade);
             json.put("raca", raca);
             json.put("peso", peso);
+            json.put("id", jsonArray.length() + 1);
             jsonArray.put(json);
             String dadosPets = jsonArray.toString();
             
+            JSONArray tutores = new JSONArray(new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json"))));
+            for(int i = 0; i < tutores.length(); i++)
+            {
+                JSONObject tutor = tutores.getJSONObject(i);
+            	if(tutores.getJSONObject(i).getString("email").equals(email))
+            	{
+                 JSONArray petsArray = tutor.optJSONArray("pets");
+
+                     if (petsArray == null) 
+                     {
+                         petsArray = new JSONArray();
+                         tutor.put("pets", petsArray);
+                     }	
+                     petsArray.put(jsonArray.length());                        
+                     tutores.put(i, tutor);
+                     break; 
+                }
+            }
+            
+        	FileWriter registradorTutor = new FileWriter("./src/registro/Tutores.json");
+        	registradorTutor.write(tutores.toString());
+        	registradorTutor.close();
+        
             registrador = new FileWriter("./src/registro/Pets.json");
             registrador.write(dadosPets);
             registrador.close();
@@ -143,12 +179,12 @@ public class GerenciarRegistro
         }
     }
 
-    public void RegistrarPetExotico(String nome, int idade, String raca, double peso, String descricao)
+    public void RegistrarPetExotico(String nome, int idade, String raca, double peso, String descricao, String email)
     {
         try{
             
         	JSONArray jsonArray; 
-        	String petsExoticosData = new String(Files.readAllBytes(Paths.get("./src/registro/Pets.json")));
+        	String petsExoticosData = new String(Files.readAllBytes(Paths.get("./src/registro/PetsExoticos.json")));
             if (petsExoticosData.trim().isEmpty()) {
                 jsonArray = new JSONArray();
             } else {
@@ -161,9 +197,31 @@ public class GerenciarRegistro
             json.put("raca", raca);
             json.put("peso", peso);
             json.put("descricao", descricao);
+            json.put("id", jsonArray.length() +1); 
             jsonArray.put(json);
-            
             String dadosPetsExoticos = jsonArray.toString();
+            
+            JSONArray tutores = new JSONArray(new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json"))));
+            for(int i = 0; i < tutores.length(); i++)
+            {
+                JSONObject tutor = tutores.getJSONObject(i);
+            	if(tutor.getString("email").equals(email))
+            	{
+                    JSONArray petsArray = tutor.optJSONArray("petsExoticos");
+                    if (petsArray == null) 
+                    {
+                        petsArray = new JSONArray();
+                        tutor.put("petsExoticos", petsArray);
+                    }	
+                    petsArray.put(jsonArray.length());                        
+                    tutores.put(i, tutor);
+                    break; 
+                    }
+            	}
+            
+            FileWriter registradorTutor = new FileWriter("./src/registro/Tutores.json");
+            registradorTutor.write(tutores.toString());
+            registradorTutor.close();
             
             registrador = new FileWriter("./src/registro/PetsExoticos.json");
             registrador.write(dadosPetsExoticos);
