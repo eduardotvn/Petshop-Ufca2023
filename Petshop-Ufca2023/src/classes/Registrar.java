@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Registrar {
     
-    public void Registro(int num)
+    public void Registro(int num, String senhaEmail)
     {
         try{
             GerenciarRegistro Registrar = new GerenciarRegistro(); 
@@ -21,7 +21,7 @@ public class Registrar {
                     String email = scan.nextLine(); 
                     System.out.println("Telefone: ");
                     String telefone = scan.nextLine(); 
-                    Registrar.RegistrarTutor(nomeTutor, email, telefone);
+                    Registrar.RegistrarTutor(nomeTutor, email, telefone, senhaEmail);
                     break; 
                 case 2: 
                     System.out.println("Nome do animal: ");

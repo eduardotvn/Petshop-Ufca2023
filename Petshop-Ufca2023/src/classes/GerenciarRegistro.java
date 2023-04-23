@@ -90,13 +90,20 @@ public class GerenciarRegistro
         }
     }
 
-    public void RegistrarTutor(String nome, String email, String telefone)
+    public void RegistrarTutor(String nome, String email, String telefone, String senhaEmail)
     {
         try{
+        	String allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         	byte[] randomByteArray = new byte[7];
         	new Random().nextBytes(randomByteArray);
+
+        	for (int i = 0; i < randomByteArray.length; i++) {
+        	    randomByteArray[i] = (byte) allowedChars.charAt(Math.abs(randomByteArray[i] % allowedChars.length()));
+        	}
+
         	String senhaRandom = new String(randomByteArray, Charset.forName("UTF-8"));
         	byte[] senhaCodificada = auth.Encryption.encryptPassword(senhaRandom);
+
         	
         	JSONArray jsonArray; 
         	String tutoresData = new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json")));
@@ -122,6 +129,9 @@ public class GerenciarRegistro
             registrador.write(dadosTutor);
             registrador.close(); 
             
+            
+            String senhaGerada = "Olá! Sua senha foi gerada, use-a para conectar-se ao aplicativo. Sua senha é: " + senhaRandom + ". Lembre de não compartilha-la com ninguém"; 
+            internetConnectionAPIs.javaMail.sendMail(email, senhaEmail, "Sua senha automática" , senhaGerada);
         } catch(Exception e){
         	e.printStackTrace();
         	System.out.println("Falhou");

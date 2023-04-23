@@ -13,6 +13,7 @@ public class App {
     	GerenciadorDoPrograma gerente = new GerenciadorDoPrograma();
     	gerente.Gerir();
     	
+    	
     	GerenciarRegistro Gerenciador = new GerenciarRegistro();
         Gerenciador.CriarRegistro();
         Gerenciador.getInformacao();

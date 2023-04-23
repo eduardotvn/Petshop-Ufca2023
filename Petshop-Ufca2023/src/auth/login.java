@@ -14,9 +14,13 @@ import org.json.JSONArray;
 import auth.Authentication;
 
 public class login {
-	public static boolean RealizarLogin()
+	
+	public static UserDataClass user; 
+	
+	public static UserDataClass RealizarLogin(int num)
 	{
 		JSONArray jsonArray;
+		String registros; 
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Login:");
 		String login = "";
@@ -29,12 +33,19 @@ public class login {
 		        senha = scan.nextLine(); 
 		    }
 		try{
-
-			String registrosADM = new String(Files.readAllBytes(Paths.get("./src/registro/Administradores.json")));
-            if (registrosADM.trim().isEmpty()) {
+			if(num == 1) 
+			{
+				registros = new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json")));
+			} else if (num == 2) {
+				registros = new String(Files.readAllBytes(Paths.get("./src/registro/Administradores.json")));
+			} else
+			{
+				return null; 
+			}
+            if (registros.trim().isEmpty()) {
                 jsonArray = new JSONArray();
             } else {
-                jsonArray = new JSONArray(registrosADM);
+                jsonArray = new JSONArray(registros);
             }
             
             for(int i = 0; i < jsonArray.length(); i++)
@@ -44,10 +55,16 @@ public class login {
             	{
             		placeholderSenha[j] = (byte) jsonArray.getJSONObject(i).getJSONArray("senha").getInt(j);
             	}
-            	if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha))
+            	if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 2)
             	{
             		auth.appState.Logar(2);
-            		return true; 
+            		user = new UserDataClass(login);
+            		return user; 
+            	} else if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 1)
+            	{
+            		auth.appState.Logar(1);
+            		user = new UserDataClass(login);
+            		return user; 
             	}
             }
             
@@ -55,9 +72,14 @@ public class login {
 		} catch (Exception e)
 		{
 			System.out.println("Login falhou");
-			return false; 
+			return null; 
 		}
 
-		return false; 
+		return null; 
+	}
+	
+	public static String getUser()
+	{
+		return user.login; 
 	}
 }
