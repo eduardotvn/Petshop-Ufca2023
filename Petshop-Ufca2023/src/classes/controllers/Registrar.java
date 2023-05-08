@@ -1,4 +1,4 @@
-package classes;
+package classes.controllers;
 
 import java.util.Scanner; 
 

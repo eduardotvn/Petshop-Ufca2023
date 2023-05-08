@@ -1,7 +1,5 @@
 package classes.animais;
 
-import classes.Animal;
-
 public class Cachorro extends Animal{
     
     enum Porte {

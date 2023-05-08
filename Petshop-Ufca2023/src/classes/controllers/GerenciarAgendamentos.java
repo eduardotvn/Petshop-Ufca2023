@@ -1,4 +1,4 @@
-package routes;
+package classes.controllers;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -57,7 +57,7 @@ public class GerenciarAgendamentos {
 	            
 	            for(int i = 0; i < jsonArray.length(); i++)
 	            {
-	            	if(jsonArray.getJSONObject(i).getString("cliente").contains(auth.login.getUser()))
+	            	if(jsonArray.getJSONObject(i).getString("cliente").contains(classes.controllers.login.getUser()))
 	            	{
 	            		System.out.println(jsonArray.getJSONObject(i));
 	            	}

@@ -1,7 +1,5 @@
 package classes.animais;
 
-import classes.Animal;
-
 public class Exotico extends Animal{
     
     public String descricao; 

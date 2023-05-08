@@ -1,4 +1,4 @@
-package routes;
+package utils;
 
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -56,7 +56,7 @@ public class Agendamento {
             	}
             } else 
             {
-            	cliente = auth.login.getUser();
+            	cliente = classes.controllers.login.getUser();
             	System.out.println("Qual o procedimento?");
             	procedimento = scan.nextLine(); 
             	System.out.println("Emergencia?");

@@ -1,4 +1,4 @@
-package classes;
+package classes.animais;
 
 public abstract class Animal {
     private String nome; 

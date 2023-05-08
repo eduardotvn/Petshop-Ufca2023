@@ -1,4 +1,4 @@
-package auth;
+package classes.controllers;
 
 import java.util.Arrays;
 import java.util.Scanner; 
@@ -12,6 +12,7 @@ import java.util.Scanner;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import auth.Authentication;
+import auth.UserDataClass;
 
 public class login {
 	

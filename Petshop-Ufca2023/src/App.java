@@ -1,6 +1,7 @@
-import classes.GerenciarRegistro;
-import classes.Registrar;
-import classes.RegistrarAdministrador;
+import classes.controllers.GerenciarRegistro;
+import classes.controllers.Registrar;
+import classes.controllers.RegistrarAdministrador;
+
 import java.util.Arrays;
 import classes.GerenciadorDoPrograma;
 
@@ -12,11 +13,6 @@ public class App {
     	auth.appState.Iniciar(); 
     	GerenciadorDoPrograma gerente = new GerenciadorDoPrograma();
     	gerente.Gerir();
-    	
-    	
-    	GerenciarRegistro Gerenciador = new GerenciarRegistro();
-        Gerenciador.CriarRegistro();
-        Gerenciador.getInformacao();
 	
     }
 }
