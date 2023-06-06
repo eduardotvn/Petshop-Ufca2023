@@ -131,7 +131,7 @@ public class GerenciarRegistro
             
             
             String senhaGerada = "Olá! Sua senha foi gerada, use-a para conectar-se ao aplicativo. Sua senha é: " + senhaRandom + ". Lembre de não compartilha-la com ninguém"; 
-            internetConnectionAPIs.javaMail.sendMail(email, senhaEmail, "Sua senha automática" , senhaGerada);
+            internetConnectionAPIs.JavaMail.sendMail(email, senhaEmail, "Sua senha automática" , senhaGerada);
         } catch(Exception e){
         	e.printStackTrace();
         	System.out.println("Falhou");
@@ -154,6 +154,7 @@ public class GerenciarRegistro
             json.put("raca", raca);
             json.put("peso", peso);
             json.put("id", jsonArray.length() + 1);
+            json.put("emailTutor", email);
             jsonArray.put(json);
             String dadosPets = jsonArray.toString();
             
@@ -242,5 +243,64 @@ public class GerenciarRegistro
         }
     }
     
+    public static void RemoverUsuario(String email) {
+    	System.out.println("Você tem certeza? Essa ação é irreversível!\r\n1 - Sim\r\n2 - Cancelar");
+    	Scanner scan = new Scanner(System.in);
+    	int opcao = scan.nextInt();
+    	if(opcao == 1) {
+    		try {
+            	JSONArray jsonArray; 
+            	String tutoresData = new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json")));
+                if (tutoresData.trim().isEmpty()) {
+                    jsonArray = new JSONArray();
+                } else {
+                    jsonArray = new JSONArray(tutoresData);
+                }
+                
+                int i = 0;
+                while (i < jsonArray.length()) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (jsonObject.getString("email").equals(email)) {
+                        jsonArray.remove(i);
+                    } else {
+                        i++;
+                    }
+                }
+                
+                String dadosTutor = jsonArray.toString(); 
+                System.out.println(dadosTutor);
+            	FileWriter registrador = new FileWriter("./src/registro/Tutores.json");
+                registrador.write(dadosTutor);
+                registrador.close(); 
+                
+                String petsData = new String(Files.readAllBytes(Paths.get("./src/registro/Pets.json")));
+                if (petsData.trim().isEmpty()) {
+                    jsonArray = new JSONArray();
+                } else {
+                    jsonArray = new JSONArray(petsData);
+                }
+                
+                i = 0;
+                while (i < jsonArray.length()) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (jsonObject.getString("emailTutor").equals(email)) {
+                        jsonArray.remove(i);
+                    } else {
+                        i++;
+                    }
+                }
+                
+                String pets = jsonArray.toString(); 
+                
+            	registrador = new FileWriter("./src/registro/Pets.json");
+                registrador.write(pets);
+                registrador.close(); 
+    		} catch(Exception e) {
+    			System.out.println(e);
+    		}
+    	} else {
+    		return;
+    	}
+    }
 }
 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import auth.appState;
+import auth.AppState;
 
 public class Agendamento {
 	public void agendar()
@@ -39,7 +39,7 @@ public class Agendamento {
             ano = scan.nextInt();
             LocalDate dataMarcada = LocalDate.of(ano, mes, dia);
             scan.nextLine();
-            if(auth.appState.estado.equals(appState.App_State.ADMINISTRADORLOGADO))
+            if(auth.AppState.estado.equals(AppState.App_State.ADMINISTRADORLOGADO))
             {
             	System.out.println("Digite o nome do cliente: ");
             	cliente = scan.nextLine(); 
@@ -56,7 +56,7 @@ public class Agendamento {
             	}
             } else 
             {
-            	cliente = classes.controllers.login.getUser();
+            	cliente = classes.controllers.Login.getUser();
             	System.out.println("Qual o procedimento?");
             	procedimento = scan.nextLine(); 
             	System.out.println("Emergencia?");

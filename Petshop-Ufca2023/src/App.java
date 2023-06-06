@@ -10,7 +10,7 @@ import auth.*;
 public class App {
     public static void main(String[] args) throws Exception 
     {
-    	auth.appState.Iniciar(); 
+    	auth.AppState.Iniciar(); 
     	GerenciadorDoPrograma gerente = new GerenciadorDoPrograma();
     	gerente.Gerir();
 	

@@ -125,4 +125,48 @@ public class Getters {
             break; 
         }
     }
+    
+    public static void VerMeusPets(String email) {
+    	JSONArray jsonArray;
+		try {
+        	String PetsData = new String(Files.readAllBytes(Paths.get("./src/registro/Pets.json")));
+            if (PetsData.trim().isEmpty()) {
+                jsonArray = new JSONArray();
+            } else {
+                jsonArray = new JSONArray(PetsData);
+            }
+        for(int i = 0; i < jsonArray.length(); i++) {
+        	if(jsonArray.getJSONObject(i).getString("emailTutor").equals(email)) {
+        		System.out.println("Nome: " + jsonArray.getJSONObject(i).getString("nome") + "\r\nRaça: " + jsonArray.getJSONObject(i).getString("raca"));
+         	    System.out.println("\r\n----------------------\r\n");
+        	}
+        }
+        	
+		} catch (Exception e)
+		{
+			System.out.print("Erro processando dados");
+			System.out.println(e);
+		}
+    }
+    
+    public static void VerTodosOsClientes() {
+    	JSONArray jsonArray;
+		try {
+        	String TutoresData = new String(Files.readAllBytes(Paths.get("./src/registro/Tutores.json")));
+            if (TutoresData.trim().isEmpty()) {
+                jsonArray = new JSONArray();
+            } else {
+                jsonArray = new JSONArray(TutoresData);
+            }
+        for(int i = 0; i < jsonArray.length(); i++) {
+        		System.out.println("Nome: " + jsonArray.getJSONObject(i).getString("login") + "\r\nEmail: " + jsonArray.getJSONObject(i).getString("email") + "\r\nTelefone: " + jsonArray.getJSONObject(i).getString("telefone"));
+         	    System.out.println("\r\n----------------------\r\n");
+        	}        	
+		} catch (Exception e)
+		{
+			System.out.print("Erro processando dados");
+			System.out.println(e);
+		}
+    }
+    
 }

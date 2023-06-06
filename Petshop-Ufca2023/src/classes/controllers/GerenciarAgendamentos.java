@@ -57,7 +57,7 @@ public class GerenciarAgendamentos {
 	            
 	            for(int i = 0; i < jsonArray.length(); i++)
 	            {
-	            	if(jsonArray.getJSONObject(i).getString("cliente").contains(classes.controllers.login.getUser()))
+	            	if(jsonArray.getJSONObject(i).getString("cliente").contains(classes.controllers.Login.getUser()))
 	            	{
 	            		System.out.println(jsonArray.getJSONObject(i));
 	            	}

@@ -12,13 +12,13 @@ import java.util.Scanner;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import auth.Authentication;
-import auth.UserDataClass;
+import auth.UserData;
 
-public class login {
+public class Login {
 	
-	public static UserDataClass user; 
+	public static UserData user; 
 	
-	public static UserDataClass RealizarLogin(int num)
+	public static UserData RealizarLogin(int num)
 	{
 		JSONArray jsonArray;
 		String registros; 
@@ -49,22 +49,25 @@ public class login {
                 jsonArray = new JSONArray(registros);
             }
             
+            
             for(int i = 0; i < jsonArray.length(); i++)
             {
             	byte[] placeholderSenha = new byte[jsonArray.getJSONObject(i).getJSONArray("senha").length()];
-            	for(int j = 0; j < placeholderSenha.length; j++)
-            	{
-            		placeholderSenha[j] = (byte) jsonArray.getJSONObject(i).getJSONArray("senha").getInt(j);
+            	if(jsonArray.getJSONObject(i).getString("login").equals(login)) {
+            		for(int j = 0; j < jsonArray.getJSONObject(i).getJSONArray("senha").length(); j++)
+            		{
+            			placeholderSenha[j] = (byte) jsonArray.getJSONObject(i).getJSONArray("senha").getInt(j);
+            		}
             	}
-            	if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 2)
+            	if(auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 2)
             	{
-            		auth.appState.Logar(2);
-            		user = new UserDataClass(login);
+            		auth.AppState.Logar(2);
+            		user = auth.BuildUserData.fetchData(login, num);
             		return user; 
-            	} else if(jsonArray.getJSONObject(i).getString("login").equals(login) && auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 1)
+            	} else if(auth.Authentication.autenticarSenha(senha, placeholderSenha) && num == 1)
             	{
-            		auth.appState.Logar(1);
-            		user = new UserDataClass(login);
+            		auth.AppState.Logar(1);
+            		user = auth.BuildUserData.fetchData(login, num);
             		return user; 
             	}
             }
@@ -72,6 +75,7 @@ public class login {
             
 		} catch (Exception e)
 		{
+			System.out.println(e);
 			System.out.println("Login falhou");
 			return null; 
 		}
@@ -82,5 +86,9 @@ public class login {
 	public static String getUser()
 	{
 		return user.login; 
+	}
+	
+	public static String getUserEmail() {
+		return user.email;
 	}
 }

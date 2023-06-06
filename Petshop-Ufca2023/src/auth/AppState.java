@@ -1,6 +1,6 @@
 package auth;
 
-public class appState {
+public class AppState {
 	public static enum App_State{
 		DESLOGADO, 
 		CLIENTELOGADO,

@@ -35,7 +35,7 @@ public class Registrar {
                     String raca = scan.nextLine();
                     System.out.println("Peso do animal: ");
                     double peso = Double.parseDouble(scan.nextLine());
-                    System.out.println("Selecione a espécie: ");
+                    System.out.println("Selecione a espécie: \r\n1 - Cachorro\r\n2 - Gato\r\n3 - Papagaio \r\n4 - Animal Exotico");
                     int especie = scan.nextInt();
                     switch(especie)
                     {

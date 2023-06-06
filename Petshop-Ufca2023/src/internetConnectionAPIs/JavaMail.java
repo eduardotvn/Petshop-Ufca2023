@@ -7,7 +7,7 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
-public class javaMail
+public class JavaMail
 {
 	protected static String emailEmpresarial = "petshopufca2023@hotmail.com";
 	protected static String senha;
